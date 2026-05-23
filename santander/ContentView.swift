@@ -8,50 +8,52 @@
 import SwiftUI
 import SwiftData
 
+enum Sections: CaseIterable {
+    case start, patrimony, insurance, analysis
+    
+    var label: String {
+        switch self {
+        case .start: "Inicio"
+        case .patrimony: "Patrimonio"
+        case .insurance: "Seguros"
+        case .analysis: "Análisis"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .start: "house.fill"
+        case .patrimony: "eurosign.circle.fill"
+        case .insurance: "beach.umbrella.fill"
+        case .analysis: "chart.pie"
+        }
+    }
+    
+    var view: (some View)? {
+        switch self {
+        case .start: StartPage()
+        default: nil
+        }
+    }
+}
+
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+        TabView {
+            ForEach(Sections.allCases, id: \.self) { section in
+                Tab(section.label, systemImage: section.icon) {
+                    if section.view == nil {
+                        Text(String(format:"Pantalla de %@", section.label))
+                    } else {
+                        section.view
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+            Tab("Busqueda", systemImage: "magnifyingglass", role: .search) {
+                EmptyView()
             }
-        }
+        }.colorScheme(.light)
     }
 }
 
