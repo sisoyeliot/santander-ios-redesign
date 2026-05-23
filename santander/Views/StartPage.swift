@@ -45,7 +45,7 @@ struct StartPage: View {
                     HStack(alignment: .top, spacing: 40) {
                         VStack {
                             Button(action: { }) {
-                                Image("LogoBizum")
+                                Image("bizum")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 22, height: 22)
@@ -229,7 +229,7 @@ struct StartPage: View {
                 }
                 ToolbarSpacer(.fixed, placement: .topBarLeading)
                 ToolbarItem(placement: .topBarLeading) {
-                    Image("LogoSantanderLong")
+                    Image("santander.long")
                         .foregroundStyle(Color.white)
                 }.sharedBackgroundVisibility(.hidden)
                 ToolbarItem(placement: .topBarTrailing) {
