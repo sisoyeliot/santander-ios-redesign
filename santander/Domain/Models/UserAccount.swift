@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct UserAccount: Identifiable {
+    let id = UUID()
+    let totalBalance: Double
+    let bankAccounts: [BankAccount]
+    let creditCards: [CreditCard]
+}
