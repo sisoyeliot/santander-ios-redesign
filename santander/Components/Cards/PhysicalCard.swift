@@ -11,31 +11,11 @@ import SwiftUI
 // "The international standard (ISO/IEC 7810 ID-1)..."
 let RATIO_CARD: Double = 85.60 / 53.98
 
-enum CardType {
-    case credit, debit, prepaid
-    
-    var backgroundColor: Color {
-        switch self {
-        case .credit: .santanderBlack
-        case .debit: .santanderRed
-        case .prepaid: .santanderLakeStream
-        }
-    }
-    
-    var label: String {
-        switch self {
-        case .credit: "Crédito"
-        case .debit: "Débito"
-        case .prepaid: "Prepago"
-        }
-    }
-}
-
 struct PhysicalCard: View {
-    let type: CardType
+    let type: CreditCardType
     let scale: CGFloat
     
-    init(_ type: CardType, scale: CGFloat = 1.0) {
+    init(_ type: CreditCardType, scale: CGFloat = 1.0) {
         self.type = type
         self.scale = scale
     }
