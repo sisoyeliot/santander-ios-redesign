@@ -11,7 +11,7 @@ import SwiftUI
 extension Font {
     
     static var santanderTitle: Font {
-        .custom("Lato-Bold", size: 32, relativeTo: .title)
+        .custom("Lato-Bold", size: 31, relativeTo: .title)
     }
     
     static var santanderHeadline: Font {
