@@ -11,6 +11,7 @@ struct AccountCard: View {
     var iban: String
     var balance: Double
     var nickname: String
+    var hide: Bool = false
     
     var body: some View {
         VStack {
@@ -44,7 +45,14 @@ struct AccountCard: View {
             
             VStack(alignment: .leading) {
                 Text("Saldo disponible").font(.custom("Lato-Bold", size: 16))
-                Text(balance.formatted(.currency(code: "EUR"))).font(.custom("Lato-Bold", size: 16))
+                if hide {
+                    HStack {
+                        Image(systemName: "ellipsis")
+                        Text(" €")
+                    }.font(.custom("Lato-Bold", size: 16))
+                } else {
+                    Text(balance.formatted(.currency(code: "EUR"))).font(.custom("Lato-Bold", size: 16))
+                }
             }
             .padding([.leading], 17)
             .padding([.bottom], 10)
@@ -69,5 +77,12 @@ struct AccountCard: View {
         iban: "ES121234",
         balance: 1200.00,
         nickname: "Cuenta Corriente"
+    )
+    
+    AccountCard(
+        iban: "ES121234",
+        balance: 1200.00,
+        nickname: "Cuenta Corriente",
+        hide: true
     )
 }

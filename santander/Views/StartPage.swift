@@ -22,9 +22,15 @@ struct StartPage: View {
                         Image(systemName: "info.circle")
                     }.padding([.top], 10)
                     HStack {
-                        Text(accountData.totalBalance.formatted(.currency(code: "EUR")))
-                            .bold()
-                            .font(.custom("Lato-Bold", size: 45))
+                        if hide {
+                            HStack {
+                                Image(systemName:"ellipsis")
+                                Text(" €")
+                            }.font(.custom("Lato-Bold", size: 45))
+                        } else {
+                            Text(accountData.totalBalance.formatted(.currency(code: "EUR")))
+                                .font(.custom("Lato-Bold", size: 45))
+                        }
                     }.padding()
                     HStack(alignment: .top, spacing: 40) {
                         VStack {
@@ -94,9 +100,20 @@ struct StartPage: View {
                                 .font(.santanderTitle)
                                 .padding([.top], 10)
                                 .padding([.bottom], 1)
-                            Text("Saldo total \(accountData.totalBalance.formatted(.currency(code: "EUR")))")
+                            if hide {
+                                HStack {
+                                    Text("Saldo total ")
+                                    Image(systemName: "ellipsis")
+                                    Text(" €")
+                                }
                                 .font(.santanderSubtitle)
                                 .padding([.top], 0.5)
+                            } else {
+                                Text("Saldo total \(accountData.totalBalance.formatted(.currency(code: "EUR")))")
+                                    .font(.santanderSubtitle)
+                                    .padding([.top], 0.5)
+                            }
+                            
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.leading], 20)
@@ -108,7 +125,8 @@ struct StartPage: View {
                                     AccountCard(
                                         iban: account.iban,
                                         balance: Double(account.balance) / 100.0,
-                                        nickname: account.nickname
+                                        nickname: account.nickname,
+                                        hide: hide
                                     )
                                 }
                             }
